@@ -1,4 +1,3 @@
-import random
 from Neuronet import *
 from Actions import *
 

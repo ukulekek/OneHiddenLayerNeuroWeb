@@ -1,6 +1,17 @@
 from NeuroMath import f_sigmoid
 import math
 
+
+'''
+Neuron Class:
+    This is inheritable class for Input/Hidden/Output Neuron classes.
+
+    comp_input():
+        Calculate neuron input
+
+    act():
+        Activation function for calculating output of neuron (sigmoid function)
+'''
 class Neuron:
     def __init__(self, n_type):
         self.type = n_type
@@ -10,9 +21,7 @@ class Neuron:
     def comp_input(self):
         sum = 0
         for syn in self.syn_list_in:
-            #print(syn.weight, syn.n_in.output)
             sum += syn.weight * syn.n_in.output
-            #print('sum = ', sum, syn.weight, syn.n_in.output)
         self.input = sum
 
     def act(self):

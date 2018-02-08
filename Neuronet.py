@@ -1,6 +1,21 @@
 from Neuron import *
 from Synapsis import *
 
+
+'''
+Neuronet() class:
+    Class which define neuronet
+
+    create_neuronet(self,input_n,hidden_n,output_n):
+        Method for creating neuronet
+        Requires:
+            input_n = amount of input neurons
+            hidden_n = amount of hidden neurons
+            output_n = amount of output neurons
+
+    create_bias_layer(self):
+        Method for creating bias neurons in input and hidden layer
+'''
 class Neuronet():
     def __init__(self):
         self.input_neurons_list = []

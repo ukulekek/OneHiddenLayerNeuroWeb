@@ -1,5 +1,10 @@
 import random
 
+
+'''
+Synapsis class
+Class which define synapsis between neurons
+'''
 class Synapsis:
     def __init__(self, n_in, n_out):
         self.weight = random.random() - 0.5

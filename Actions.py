@@ -2,6 +2,14 @@ from Neuron import *
 from Synapsis import *
 from NeuroMath import mse
 
+
+'''
+computing(neuronet, input_list):
+    Calculate and return outputs of out neurons.
+    Requires:
+        neuronet =  object of Neuronet() class
+        input_list = list of input values
+'''
 def computing(neuronet,input_list):
     for i in range(len(neuronet.input_neurons_list)):
         if neuronet.input_neurons_list[i].type != 'b':
@@ -17,7 +25,21 @@ def computing(neuronet,input_list):
             output_list.append(neuron.output)
     return output_list
 
+'''
+training(neuronet, training_set_list,E ,A ,iter,point):
+    Training and return your neuronet.
+    Requires:
+        neuronet = object of Neuronet() class
+        training_set_list = list of training sets
+            Format:[input_list, ideal_output_list]
+            Recommended to use create_training_data() function
+        E = speed of training
+        A = momentum
+            For more information, see "gradient descent"
+        iter = amount of iterations
+        point = list of numbers iterations for which the neuronet state will be displayed
 
+'''
 def training(neuronet, training_set_list,E ,A ,iter,point):
     for loop in range(iter+1):
         printing = False
@@ -55,7 +77,20 @@ def training(neuronet, training_set_list,E ,A ,iter,point):
         if printing == True: print('----')
     return neuronet
 
-
+'''
+create_training_data(file):
+    Create and return list of training sets.
+    Requires:
+        file = name of file from which dataset will be read
+        Format of data in file: iiii;oooo
+            i - input for neuron (0/1)
+            o - ideal output of output neuron
+            For example:
+                00;0
+                01;1
+                10;1
+                11;0
+'''
 def create_training_data(file):
     f = open(file,'r')
     training_set_list = []

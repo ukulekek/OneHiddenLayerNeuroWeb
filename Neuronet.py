@@ -1,46 +1,47 @@
 from Neuron import *
 from Synapsis import *
 
-def create_neuronet():
-    input_n = input("Number of neurons in input layer = ")
-    input_layer = []
-    for i in range(int(input_n)):
-        n = InputNeuron('i')
-        input_layer.append(n)
+class Neuronet():
+    def __init__(self):
+        self.input_neurons_list = []
+        self.hidden_neurons_list = []
+        self.output_neurons_list = []
+        self.bias_neurons = False
 
-    hidden_n = input("Number of neurons in hidden layer = ")
-    hidden_layer = []
-    for i in range(int(hidden_n)):
-        n = HiddenNeuron('h')
-        hidden_layer.append(n)
+    def create_neuronet(self,input_n, hidden_n, output_n):
+        for _ in range(int(input_n)):
+            n = InputNeuron('i')
+            self.input_neurons_list.append(n)
 
+        for _ in range(int(hidden_n)):
+            n = HiddenNeuron('h')
+            self.hidden_neurons_list.append(n)
 
-    output_n = input("Number of neurons in output layer = ")
-    output_layer = []
-    for i in range(int(output_n)):
-        n = OutputNeuron('o')
-        output_layer.append(n)
+        for _ in range(int(output_n)):
+            n = OutputNeuron('o')
+            self.output_neurons_list.append(n)
 
-    for i in input_layer:
-        for h in hidden_layer:
-            s = Synapsis(i,h)
-            i.syn_list_out.append(s)
-            h.syn_list_in.append(s)
-    for h in hidden_layer:
-        for o in output_layer:
-            s = Synapsis(h,o)
-            h.syn_list_out.append(s)
-            o.syn_list_in.append(s)
+        for input_neuron in self.input_neurons_list:
+            for hidden_neuron in self.hidden_neurons_list:
+                s = Synapsis(input_neuron,hidden_neuron)
+                input_neuron.syn_list_out.append(s)
+                hidden_neuron.syn_list_in.append(s)
+                for output_neuron in self.output_neurons_list:
+                    s = Synapsis(hidden_neuron,output_neuron)
+                    hidden_neuron.syn_list_out.append(s)
+                    output_neuron.syn_list_in.append(s)
 
-    layers = [input_layer,hidden_layer, output_layer]
-    return layers
-
-def create_bias_layer(neuronet):
-    for i in range(2):
-        b = BiasNeuron('b')
-        for neuron in neuronet[i+1]:
-            syn = Synapsis(b,neuron)
-            b.syn_list_out.append(syn)
+    def create_bias_layer(self):
+        bias_neuron1 = BiasNeuron('b')
+        bias_neuron2 = BiasNeuron('b')
+        for neuron in self.hidden_neurons_list:
+            syn = Synapsis(bias_neuron1,neuron)
+            bias_neuron1.syn_list_out.append(syn)
             neuron.syn_list_in.append(syn)
-        neuronet[i].append(b)
-    return neuronet
+        self.input_neurons_list.append(bias_neuron1)
+        for neuron in self.output_neurons_list:
+            syn = Synapsis(bias_neuron2, neuron)
+            bias_neuron2.syn_list_out.append(syn)
+            neuron.syn_list_in.append(syn)
+        self.hidden_neurons_list.append(bias_neuron2)
+        self.bias_neurons = True

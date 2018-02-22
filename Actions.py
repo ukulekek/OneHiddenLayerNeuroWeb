@@ -51,7 +51,7 @@ def training(neuronet, training_set_list,E ,A ,iter,point):
             result_list = computing(neuronet, input_list)
             err = mse(result_list, out_ideal_list)
 
-            if printing == True: print(loop,input_list, out_ideal_list, result_list, err)
+            if printing == True: print(loop, out_ideal_list, result_list, err)
             for i in range(len(neuronet.output_neurons_list)):
                 neuronet.output_neurons_list[i].compute_delta(out_ideal_list[i])
 
